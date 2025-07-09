@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=400, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Mensagem para você💖</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffb6c1, #ffe4e1);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      overflow: auto;
+    }
+    header {
+      padding: 2rem;
+      background-color: #ff69b4;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem;
+    }
+
+    .gallery img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem auto;
+    }
+
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background-color: #ff1493;
+      color: white;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ff69b4;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      background: radial-gradient(circle at top left, #ffffff, #ffe4f0);
+      margin: 15% auto;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 300px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+      position: relative;
+      animation: aura 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes aura {
+      from { box-shadow: 0 0 30px rgba(255, 105, 180, 0.6); }
+      to { box-shadow: 0 0 50px rgba(255, 20, 147, 0.9); }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #ff1493;
+    }
+
+    #mensagemTexto {
+      font-size: 1.2rem;
+      color: #800080;
+      margin-top: 1rem;
+      min-height: 100px;
+      white-space: pre-wrap;
+    }
+
+    .emoji {
+      font-size: 2rem;
+      margin-top: 1rem;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    
+    .texto-colorido {
+      color: #e91e63; /* Cor rosa */
+      font-size: 20px;
+      font-family: Arial, sans-serif;
+    }
+    
+    .coracoes::before, .coracoes::after {
+    content: "❤";
+    position: absolute;
+    font-size: 2rem;
+    color: #ff6b81;
+    animation: flutuar 6s linear infinite;
+  }
+
+  .coracoes::before {
+    left: 10%;
+    top: 100%;
+    animation-delay: 0s;
+  }
+
+  .coracoes::after {
+    left: 80%;
+    top: 100%;
+    animation-delay: 3s;
+  }
+
+  @keyframes flutuar {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-400px) scale(1.5);
+      opacity: 0;
+    }
+  }
+  .memoria {
+    cursor: pointer;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 15px auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 500px;
+    transition: 0.3s ease;
+    
+  }
+
+  .texto-memoria {
+    display: none;
+    margin-top: 10px;
+  }
+  #modalMemoria {
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+button:hover {
+  filter: brightness(1.1);
+  cursor: pointer;
+}
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+.grade-botoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  gap: 15px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.grade-botoes button,
+.controls > button {
+  background-color: #ff0099;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  margin: 5px auto;
+  display: block;
+  max-width: 300px;
+}
+
+.grade-botoes button:hover,
+.controls > button:hover {
+  transform: scale(1.05);
+}
+
+  .botoes-memoria {
+    margin-top: 5px;
+    text-align: right;
+  }
+  .botoes-memoria button {
+    background: #f06292;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  </style>
+</head>
+<body>
+
+  <header>
+    💌 happy birthday! 💌
+  </header>
+
+  <div class="gallery">
+    <img src="efoto.jpg" alt="Foto 1">
+    <img src="hello.jpg" alt="Foto 2">
+    <img src="fotodois.jpg" alt="Foto 3">
+  </div>
+
+  <div class="controls">
+    <button onclick="abrirModal()"><i><b>Clique para ver uma mensagem 💕</b></i></button>
+  <div class="grade-botoes">
+    <button onclick="abrirModal2()"><i><b>POEMAS ✨</b></i></button>
+    <button onclick="abrirModal3()"><i><b>IDIOMAS 💫</b></i></button>
+    <button onclick="abrirModal4()"><i><b>MOTIVOS 🌟</b></i></button>
+    <button onclick="alternarQuiz()"><i><b>QUIZINHO 🌟</b></i></button>
+  </div>
+</div>
+<button onclick="alternarVideo()" id="botaoVideo"><i><b>ASSISTIR VÍDEO</b></i></button>
+
+<div id="meuVideo" style="display: none; margin-top: 20px;">
+  <video width="300" controls>
+    <source src="Vídeo.mp4" type="video/mp4">
+    Seu navegador não suporta vídeo.
+  </video>
+</div>
+<p>💕 Te dedico essa musiquinha 💕</p>
+
+<button onclick="alternarMusica()" id="botaoMusica"><i><b>OUVIR MÚSICA</b></i></button>
+
+<div id="contadorDias" style="position: relative; margin-top: 30px; text-align: center; font-family: 'Arial', sans-serif; background: #fff0f6; padding: 30px 20px; border-radius: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 300px; margin-left: auto; margin-right: auto;">
+  <h2 style="color: #d63384;">Quantos dias desde que tudo começou?</h2>
+  <p id="mensagemDias" style="font-size: 1.3rem; color: #6f42c1;"></p>
+
+  <!-- Corações animados -->
+  <div class="coracoes"></div>
+</div>
+<div style="text-align: center; margin-top: 40px;">
+  <button onclick="mostrarFrase()" style="padding: 12px 25px; background: #e91e63; color: white; border: none; border-radius: 20px; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+     <i><b>Frase especialmente para você 💞</b></i>
+  </button>
+  <p id="fraseDoCoracao" style="margin-top: 20px; font-size: 1.4rem; color: #880e4f; font-style: italic;"></p>
+</div>
+
+<!-- Container do Quiz (inicialmente escondido) -->
+<div id="quizContainer" style="display: none; margin-top: 2rem; text-align: left; background: #fff0f6; padding: 20px; border-radius: 20px; max-width: 300px; margin-left: auto; margin-right: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+  <h2 style="text-align:center; color: #d63384">Quiz do Amor</h2>
+  <form id="quizForm">
+    <div class="question">
+      <p>1. Qual o gênero de séries/filmes que a Damares gosta?</p>
+      <label><input type="radio" name="q1" value="a"> Romance</label><br>
+      <label><input type="radio" name="q1" value="b"> Terror</label><br>
+      <label><input type="radio" name="q1" value="c"> Suspense</label>
+    </div>
+    <div class="question">
+      <p>2. O que a Damares mais gosta de fazer no tempo livre? </p>
+      <label><input type="radio" name="q2" value="a"> Dormir</label><br>
+      <label><input type="radio" name="q2" value="b"> Pintar</label><br>
+      <label><input type="radio" name="q2" value="c"> Estudar</label>
+    </div>
+    <div class="question">
+      <p>3. Qual é o signo da Damares?</p>
+      <label><input type="radio" name="q3" value="a"> Gemeos</label><br>
+      <label><input type="radio" name="q3" value="b"> Touro </label><br>
+      <label><input type="radio" name="q3" value="c"> Escorpião</label>
+    </div>
+    <div class="question">
+      <p>4. Qual gênero de livros a Damares gosta de ler?</p>
+      <label><input type="radio" name="q4" value="a">Ficção científica</label><br>
+      <label><input type="radio" name="q4" value="b"> Romance</label><br>
+      <label><input type="radio" name="q4" value="c"> Terror </label>
+    </div>
+    <div class="question">
+      <p>5. O que mais irrita a Damares em uma conversa? ?</p>
+      <label><input type="radio" name="q5" value="a"> Ficar enrolando pra dizer a verdade </label><br>
+      <label><input type="radio" name="q5" value="b"> Ignorar e depois agir como se nada tivesse acontecido</label><br>
+      <label><input type="radio" name="q5" value="c"> Responder com kk </label>
+    </div>
+    <br>
+    <button type="button" onclick="verificarRespostas()">Enviar Respostas</button>
+  
+  <div id="quizResultado" style="margin-top: 20px; font-weight: bold; text-align: center;"></div>
+  </form>
+</div>
+<!-- Container das memórias -->
+<div id="memoriasContainer" style="margin: 40px auto; max-width: 300px; text-align: center;">
+  <h2 style="color: #c2185b;">Nossas Memórias</h2>
+</div>
+
+<!-- Botão Adicionar -->
+<button onclick="abrirModalMemoria()" style="background: #d63384; color: white; border: none; border-radius: 20px; padding: 10px 20px; margin-top: 20px;">
+  + Adicionar Nova Memória
+</button>
+
+<!-- Modal Nova Memória -->
+<div id="modalMemoria" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+  <div style="background: white; padding: 20px; border-radius: 15px; max-width: 300px; width: 90%;">
+    <div style="font-size: 2rem; text-align: center; color: #d63384;"> 💕 </div>
+    <h3>Nova Memória</h3>
+    <textarea id="inputMemoria" rows="4" placeholder="Digite sua memória aqui..." style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #ff69b4; box-sizing: border-box; resize: none; font-size: 1rem;"></textarea>
+    <div style="margin-top: 10px; text-align: right;">
+      <button onclick="fecharModalMemoria()" style="background: #d63384; color: white; border: none; padding: 6px 12px; border-radius: 10px;">Cancelar</button>
+      <button onclick="confirmarMemoria()" style="background: #d63384; color: white; border: none; padding: 6px 12px; border-radius: 10px;">Salvar</button>
+      <audio id="somMemoria" src="Amor.mp3"></audio>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Título -->
+<div id="modalEditarTitulo" style="display:none; position: fixed; top: 0; left: 0; 
+    width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1001; 
+    justify-content: center; align-items: center;">
+  <div style="background: white; padding: 20px; border-radius: 15px; max-width: 300px; width: 90%;">
+    <h3>Editar Título</h3>
+    <input id="inputNovoTitulo" type="text" style="width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #ff69b4; box-sizing: border-box; font-size: 1rem;">
+    <div style="margin-top: 10px; text-align: right;">
+      <button onclick="fecharModalEditarTitulo()" style="background: #d63384; color: white; border: none; padding: 6px 12px; border-radius: 10px;">Cancelar</button>
+      <button onclick="salvarNovoTitulo()" style="background: #d63384; color: white; border: none; padding: 6px 12px; border-radius: 10px;">Salvar</button>
+    </div>
+  </div>
+</div>
+<!-- Modal Visualizar Memória -->
+<div id="modalVerMemoria" style="display:none; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1003;
+  justify-content: center; align-items: center;">
+  <div style="background: white; padding: 20px; border-radius: 15px; max-width: 300px; width: 90%;">
+    <h3 id="tituloVerMemoria" style="color: #d63384; margin-bottom: 10px;"></h3>
+    <p id="textoVerMemoria" style="font-size: 1rem; color: #333;"></p>
+    <div style="text-align: right; margin-top: 10px;">
+      <button onclick="fecharModalVerMemoria()" style="background: #d63384; color: white; border: none; padding: 6px 12px; border-radius: 10px;">Fechar</button>
+    </div>
+  </div>
+</div>
+<!-- Modal Confirmar Exclusão -->
+<div id="modalConfirmarExclusao" style="display:none; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1004;
+  justify-content: center; align-items: center;">
+  <div style="background: white; padding: 20px; border-radius: 15px; max-width: 300px; width: 90%; text-align: center;">
+    <h3 style="color: #d63384; margin-bottom: 10px;">Confirmar Exclusão</h3>
+    <p style="font-size: 1rem; color: #333;">Tem certeza que deseja excluir? <br><b>Lembre-se que memórias não podem ser excluídas nem esquecidas</b></p>
+    <div style="margin-top: 15px; display: flex; justify-content: center; gap: 10px;">
+      <button onclick="fecharModalConfirmarExclusao()" style="background: #ccc; color: #333; border: none; padding: 8px 16px; border-radius: 10px;">Cancelar</button>
+      <button onclick="confirmarExclusao()" style="background: #d63384; color: white; border: none; padding: 8px 16px; border-radius: 10px;">Excluir</button>
+    </div>
+  </div>
+</div>
+
+    <audio id="musicaPrincipal">
+      <source src="Levocomigo.mp3" type="audio/mpeg">
+      Seu navegador não suporta áudio.
+    </audio>
+  </div>
+
+  <!-- Modal 1 -->
+  <div id="modalMensagem" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="fecharModal()">&times;</span>
+      <div id="mensagemTexto"></div>
+      <div class="emoji">💖</div>
+    </div>
+  </div>
+
+  <!-- Modal 2 -->
+  <div id="modalMensagem2" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="fecharModal2()">&times;</span>
+      <div id="mensagemTexto2"> 
+           <h1>POEMAS</h1>
+           <hr>
+           <p><strong><b><i>Como não amar?</i></b></strong><br>
+           <em>Autor Desconhecido</em><br></p>
+          <p>Amei tudo em você,</br> 
+           talvez demais,</br>
+           mas como não amar?<br>
+           <br>Aquele sorriso,</br>
+           aquele riso,</br> 
+           aqueles olhos,</br>
+           seu humor,
+           sua paixão...</br></p>
+      <p>como eu não poderia te amar,<br>
+     se você era tudo <br> que eu já quis</p><br>
+     <hr>
+     <b><i>Não duvides do meu amor</i></b><br>
+     <em>Willian Shakespeare</em>
+      <p>Duvida da luz dos astros,<br>
+         De que o sol tenha calor,<br>
+         Duvida até da verdade,<br>
+         Mas confia em meu amor.</p><br>
+         <hr>
+                 <p><strong><b><i>No silêncio da noite</i></b></strong><br>
+          <em>Autor Desconhecido</em></p>
+         <p>No silêncio da noite, onde só o murmúrio das estrelas nos  ouve,<br>
+            meu coração sussurra seu nome em cada verso que compõe minha existência.<br>Seu amor é a melodia eterna que embala minha alma,<br> e cada pensamento seu é um poema que ilumina minha vida.</p><br>
+            <hr>
+        <p><strong><b><i>Eu?</i></b></strong><br>
+            <em>Autor Desconhecido</em></p>
+            <p>Eu realmente te amo como ninguém.<br>
+               Embora às vezes eu me comporte mal com você.<br>
+               Eu não quero te perder.<br>
+               Porque você é toda a minha felicidade.<br>
+               Uma parte importante do meu....<br>
+              <i>coração.</p><br>
+              <hr>
+           <p><strong><b><i>Sabe por quê?</i></b></strong><br>
+               <em>Autor Desconhecido</em></p>
+
+    <p>
+  Sabe porque eu me apaixonei em você?<br>
+  Porque você foi simplesmente você! Você é incrível,<br>
+  você me conquistou com seu jeito de ser.<br>
+  Seu olhar marcante foi me conquistando aos poucos.<br>
+  Os dias foram passando e eu percebi que você estava em meus pensamentos,<br>
+  comecei a te enxergar nas músicas que eu escutava,<br>
+  comecei a sorrir quando eu pensava em você.<br>
+  Meu coração já batia mais forte ao ouvir sua voz.
+</p><br>
+       <hr>   
+            <p><strong><i><b>Soneto 43</b></i></strong><br>
+             <em>Elizabeth Barrett Browning</em></p>
+            <p>
+            Como te amo? Deixa-me contar os modos.<br>
+            Amo-te ao mais profundo, largo e alto<br>
+            Que minha alma alcança, quando, fora de vista,<br>
+            Para os fins do Ser e da Graça ideal.<br><br>
+
+           Amo-te ao nível das necessidades mais calmas,<br>
+            Pela luz do sol e da vela.<br>
+       Amo-te livremente, como os homens lutam pelo Direito;<br>
+       Amo-te puramente, como eles se afastam do Louvor.<br><br>
+
+          Amo-te com a paixão posta em uso<br>
+       Em minhas velhas mágoas, e com a fé da minha infância.<br>
+        Amo-te com um amor que parecia perdido<br>
+        Com meus santos perdidos.<br>
+       Amo-te com o sopro, sorrisos, lágrimas, de toda a minha vida;<br>
+        E, se Deus quiser, te amarei melhor depois da morte.
+</p><br>
+<hr>
+
+<p><strong>Soneto de Fidelidade</strong><br>
+<em>Vinicius de Moraes</em></p>
+<p>
+De tudo, ao meu amor serei atento<br>
+Antes, e com tal zelo, e sempre, e tanto<br>
+Que mesmo em face do maior encanto<br>
+Dele se encante mais meu pensamento.<br><br>
+
+Quero vivê-lo em cada vão momento<br>
+E em seu louvor hei de espalhar meu canto<br>
+E rir meu riso e derramar meu pranto<br>
+Ao seu pesar ou seu contentamento.<br><br>
+
+E assim, quando mais tarde me procure<br>
+Quem sabe a morte, angústia de quem vive<br>
+Quem sabe a solidão, fim de quem ama<br><br>
+
+Eu possa me dizer do amor (que tive):<br>
+Que não seja imortal, posto que é chama<br>
+Mas que seja infinito enquanto dure.
+</p>
+<br>
+<hr>
+
+<p><strong>Amor é fogo que arde sem se ver</strong><br>
+<em>Luís de Camões</em></p>
+
+<p>
+Amor é fogo que arde sem se ver;<br>
+É ferida que dói e não se sente;<br>
+É um contentamento descontente;<br>
+É dor que desatina sem doer;<br><br>
+
+É um não querer mais que bem querer;<br>
+É solitário andar por entre a gente;<br>
+É nunca contentar-se de contente;<br>
+É cuidar que se ganha em se perder;<br><br>
+
+É querer estar preso por vontade;<br>
+É servir a quem vence, o vencedor;<br>
+É ter com quem nos mata lealdade.<br><br>
+
+Mas como causar pode seu favor<br>
+Nos corações humanos amizade,<br>
+Se tão contrário a si é o mesmo amor?
+</p>
+<br>
+<hr>
+
+<p><strong>Eu não sei mais viver sem ti</strong><br>
+<em>Carlos Drummond de Andrade</em></p>
+
+<p>
+Eu não sei mais viver sem ti,<br>
+meu coração te chama em silêncio,<br>
+cada instante é teu nome,<br>
+cada sonho, teu sorriso.<br><br>
+
+Sem ti, o mundo perde cor,<br>
+sem ti, a vida é vazia,<br>
+mas com teu amor eu sou inteiro,<br>
+inteiro e feliz, enfim.
+</p>
+<br>
+<hr>
+
+<p><strong>Amor</strong><br>
+<em>Cecília Meireles</em></p>
+
+<p>
+Amor, amor, se eu soubesse<br>
+Que eras triste assim,<br>
+Eu te tivesse amado menos,<br>
+Ou, quem sabe, mais, enfim.<br><br>
+
+Porque o amor é uma flor,<br>
+Que brota na alegria,<br>
+E murcha quando a dor<br>
+Esconde a luz do dia.
+</p>
+<br>
+<hr>
+
+<p><strong>Soneto</strong><br>
+<em>Carlos Drummond de Andrade</em></p>
+
+<p>
+Amo-te tanto, meu amor, não cante<br>
+O humano coração com mais ternura;<br>
+E a tua boca, que a beija tão pura,<br>
+Eu sinto a minha em fogo e em pranto.<br><br>
+
+Amo-te tanto, que até desventura<br>
+Se torna doce, e o que era amargura<br>
+E o sofrer meu se torna doçura<br>
+Ao sabor do teu riso e do teu canto.<br><br>
+
+Amo-te tanto, que não sei dizer<br>
+Como nem quando nem por que te amo;<br>
+Só sei que é com toda a alma que te quero.<br><br>
+
+E esta alma, que é triste e é tão cheia,<br>
+Sente em ti tanto bem e tanto mal,<br>
+Que nem sei se é amor ou é dor que desejo.
+</p>
+<br>
+<hr>
+
+<p><strong>Soneto XVII</strong><br>
+<em>Pablo Neruda</em></p>
+
+<p>
+Não te amo como se fosses rosa de sal, topázio<br>
+ou flecha de cravos que propagam o fogo:<br>
+te amo como se amam certas coisas obscuras,<br>
+secretamente, entre a sombra e a alma.<br><br>
+
+Te amo como a planta que não floresce e carrega<br>
+dentro de si, oculta, a luz daquelas flores,<br>
+e graças ao teu amor vive escuro em meu corpo<br>
+o apertado aroma que ascendeu da terra.<br><br>
+
+Te amo sem saber como, nem quando, nem onde,<br>
+te amo diretamente sem problemas nem orgulho:<br>
+assim te amo porque não sei amar de outra maneira<br><br>
+
+senão deste modo, em que não sou nem és,<br>
+tão perto que a tua mão sobre o meu peito é minha,<br>
+tão perto que se fecham teus olhos com meu sono.
+</p>
+<br>
+<hr>
+
+<p><strong>Amor Bandido</strong><br>
+<em>Adélia Prado</em></p>
+
+<p>
+Amor, se és bandido, deixa-me assaltar-te;<br>
+rouba-me a calma, o sono, o respirar;<br>
+não peço mais que um pedaço de ti,<br>
+um pouco do teu fogo para me aquecer.<br><br>
+
+Deixa que eu viva nesta febre ardente,<br>
+deixa que eu ame sem medo, sem medida;<br>
+que o amor bandido me leve, então,<br>
+pra dentro do teu abraço, sem saída.
+</p>
+<br>
+<hr>
+
+<p><strong>Poema de Amor</strong><br>
+<em>Anônimo</em></p>
+
+<p>
+Amar é sentir o céu na palma da mão,<br>
+é ter o coração sempre em expansão.<br>
+É saber que em cada olhar existe um mundo,<br>
+que no abraço se encontra o profundo.<br><br>
+
+Amar é viver a vida em intensidade,<br>
+é fazer do amor a verdadeira realidade.
+</p>
+<br>
+<hr>
+
+<p><strong>O Amor</strong><br>
+<em>Olavo Bilac</em></p>
+
+<p>
+O amor é um fogo que arde sem se ver,<br>
+É uma ferida que dói e não se sente;<br>
+É um contentamento descontente,<br>
+É dor que desatina sem doer.<br><br>
+
+É um não querer mais que bem querer;<br>
+É solitário andar por entre a gente;<br>
+É nunca contentar-se de contente;<br>
+É cuidar que se ganha em se perder.<br><br>
+
+É querer estar preso por vontade;<br>
+É servir a quem vence, o vencedor;<br>
+É ter com quem nos mata lealdade;<br><br>
+
+Mas como causar pode seu favor<br>
+Nos corações humanos amizade,<br>
+Se tão contrário a si é o mesmo amor?
+</p>
+<br>
+<hr>
+
+<p><strong>Canção do Amor</strong><br>
+<em>Vinicius de Moraes</em></p>
+
+<p>
+Eu sei que vou te amar<br>
+Por toda a minha vida eu vou te amar;<br>
+Em cada despedida eu vou te amar;<br>
+Desesperadamente, eu sei que vou</p>
+<br> 
+<hr>
+
+              
+                
+               <p><span style="color: #e91e63;">Eu,</span><br>
+               Que nunc<span style="color: #e91e63;">a</span> tive sorte<br> em nada, <span style="color: #e91e63;">m</span>e senti <br> sortuda p<span style="color: #e91e63;">o</span>r ter<br> encontrado <span style="color: #e91e63;">você</span><br>
+               <h1><i><b></b></i></h1></p>
+      <div class="emoji">✍️💭</div>
+    </div>
+  </div> 
+  </div>
+
+  <!-- Modal 3 -->
+  <div id="modalMensagem3" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="fecharModal3()">&times;</span>
+      <div id="mensagemTexto3"><h1><b>Eu te amo em 100 idiomas</b></h1>
+
+  <div class="language">1. Português: Eu te amo</div>
+  <div class="language">2. Inglês: I love you</div>
+  <div class="language">3. Espanhol: Te amo</div>
+  <div class="language">4. Francês: Je t'aime</div>
+  <div class="language">5. Alemão: Ich liebe dich</div>
+  <div class="language">6. Italiano: Ti amo</div>
+  <div class="language">7. Japonês: 愛してる (Aishiteru)</div>
+  <div class="language">8. Chinês (Mandarim): 我爱你 (Wǒ ài nǐ)</div>
+  <div class="language">9. Coreano: 사랑해 (Saranghae)</div>
+  <div class="language">10. Russo: Я тебя люблю (Ya tebya lyublyu)</div>
+  <div class="language">11. Árabe: أحبك (Uḥibbuka)</div>
+  <div class="language">12. Hindi: मैं तुमसे प्यार करता हूँ (Main tumse pyar karta hoon)</div>
+  <div class="language">13. Grego: Σ' αγαπώ (S’agapo)</div>
+  <div class="language">14. Turco: Seni seviyorum</div>
+  <div class="language">15. Holandês: Ik hou van jou</div>
+  <div class="language">16. Sueco: Jag älskar dig</div>
+  <div class="language">17. Dinamarquês: Jeg elsker dig</div>
+  <div class="language">18. Norueguês: Jeg elsker deg</div>
+  <div class="language">19. Finlandês: Rakastan sinua</div>
+  <div class="language">20. Polonês: Kocham cię</div>
+  <div class="language">21. Tcheco: Miluji tě</div>
+  <div class="language">22. Húngaro: Szeretlek</div>
+  <div class="language">23. Romeno: Te iubesc</div>
+  <div class="language">24. Tailandês: ฉันรักคุณ (Chan rak khun)</div>
+  <div class="language">25. Vietnamita: Anh yêu em</div>
+  <div class="language">26. Tagalo: Mahal kita</div>
+  <div class="language">27. Indonésio: Aku cinta kamu</div>
+  <div class="language">28. Malaio: Saya cinta padamu</div>
+  <div class="language">29. Suaíli: Nakupenda</div>
+  <div class="language">30. Hebraico: אני אוהב אותך (Ani ohev otach)</div>
+  <div class="language">31. Persa: دوستت دارم (Dooset daram)</div>
+  <div class="language">32. Bengalês: আমি তোমায় ভালোবাসি (Ami tomay bhalobashi)</div>
+  <div class="language">33. Urdu: میں تم سے پیار کرتا ہوں</div>
+  <div class="language">34. Punjabi: ਮੈਂ ਤੈਨੂੰ ਪਿਆਰ ਕਰਦਾ ਹਾਂ</div>
+  <div class="language">35. Gujarati: હું તને પ્રેમ કરું છું</div>
+  <div class="language">36. Marathi: मी तुझ्यावर प्रेम करतो</div>
+  <div class="language">37. Ucraniano: Я тебе люблю</div>
+  <div class="language">38. Sérvio: Волим те (Volim te)</div>
+  <div class="language">39. Croata: Volim te</div>
+  <div class="language">40. Bósnio: Volim te</div>
+  <div class="language">41. Esloveno: Ljubim te</div>
+  <div class="language">42. Eslovaco: Ľúbim ťa</div>
+  <div class="language">43. Lituano: Aš tave myliu</div>
+  <div class="language">44. Letão: Es tevi mīlu</div>
+  <div class="language">45. Estoniano: Ma armastan sind</div>
+  <div class="language">46. Islandês: Ég elska þig</div>
+  <div class="language">47. Gaélico (Irlandês): Taim i' ngra leat</div>
+  <div class="language">48. Galês: 'Rwy'n dy garu di</div>
+  <div class="language">49. Maori: Aroha ahau ki a koe</div>
+  <div class="language">50. Samoano: Ou te alofa ia te oe</div>
+  <div class="language">51. Fijiano: Au domoni iko</div>
+  <div class="language">52. Tonga: ʻOfa atu</div>
+  <div class="language">53. Havaiano: Aloha wau ia ʻoe</div>
+  <div class="language">54. Basco: Maite zaitut</div>
+  <div class="language">55. Catalão: T'estimo</div>
+  <div class="language">56. Occitano: T'estimi</div>
+  <div class="language">57. Maltês: Inħobbok</div>
+  <div class="language">58. Georgiano: მიყვარხარ (Mikvarhar)</div>
+  <div class="language">59. Armênio: Ես քեզ սիրում եմ (Yes k’ez sirum yem)</div>
+  <div class="language">60. Cazaque: Мен сені жақсы көремін</div>
+  <div class="language">61. Uzbeque: Men seni sevaman</div>
+  <div class="language">62. Turcomeno: Men seni söýýärin</div>
+  <div class="language">63. Quirguiz: Мен сени жакшы көрөм</div>
+  <div class="language">64. Mongol: Би чамд хайртай (Bi chamd khairtai)</div>
+  <div class="language">65. Tibetano: ང་ཁྱེད་ལ་དགའ་པོ་ཡོད། (Nga khe che la ga po yoe)</div>
+  <div class="language">66. Nepalês: म तिमीलाई माया गर्छु</div>
+  <div class="language">67. Lojban: mi do prami</div>
+  <div class="language">68. Esperanto: Mi amas vin</div>
+  <div class="language">69. Interlíngua: Io ama te</div>
+  <div class="language">70. Latim: Te amo</div>
+  <div class="language">71. Tâmil: நான் உன்னை 사랑ிக்கிறேன்</div>
+  <div class="language">72. Canarim: ಹೌದು ನಾನು ನಿನ್ನನ್ನು ಪ್ರೀತಿಸುತ್ತೇನೆ</div>
+  <div class="language">73. Malayalam: ഞാൻ നിന്നെ സ്നേഹിക്കുന്നു</div>
+  <div class="language">74. Telugu: నేను నిన్ను ప్రేమిస్తున్నాను</div>
+  <div class="language">75. Sinhala: මම ඔයාව ආදරෙයි</div>
+  <div class="language">76. Khmer: ខ្ញុំស្រលាញ់អ្នក</div>
+  <div class="language">77. Lao: ຂ້ອຍຮັກເຈົ້າ</div>
+  <div class="language">78. Bielo-russo: Я цябе кахаю</div>
+  <div class="language">79. Pashto: زه تا سره مینه لرم</div>
+  <div class="language">80. Cingalês: මම ඔබට ආදරෙයි</div>
+  <div class="language">81. Yoruba: Mo nifẹ rẹ</div>
+  <div class="language">82. Hausa: Ina son ku</div>
+  <div class="language">83. Ibo: A hụrụ m gị n'anya</div>
+  <div class="language">84. Xhosa: Ndiyakuthanda</div>
+  <div class="language">85. Zulu: Ngiyakuthanda</div>
+  <div class="language">86. Tswana: Ke a go rata</div>
+  <div class="language">87. Amárico: እወድሃለሁ (ewedihalehu)</div>
+  <div class="language">88. Somali: Waan ku jeclahay</div>
+  <div class="language">89. Africâner: Ek het jou lief</div>
+  <div class="language">90. Maori (NZ): Aroha ahau ki a koe</div>
+  <div class="language">91. Cree: Kisâkihitin</div>
+  <div class="language">92. Nahuatl: Nimitztlazohtla</div>
+  <div class="language">93. Quéchua: Kuyayki</div>
+  <div class="language">94. Guarani: Rohayhu</div>
+  <div class="language">95. Aimará: Munsma</div>
+  <div class="language">96. Tupi: Xê ro hayhu</div>
+  <div class="language">97. Mapuche: Inche tañi rakin</div>
+  <div class="language">98. Inuktitut: Nagligivagit</div>
+  <div class="language">99. Lakota: Tecihila</div>
+  <div class="language">100. Klingon (ficcional): bangwI' SoH</div>
+</div>
+  <p><i><b>100 idiomas ainda é pouco para dizer o quanto eu te amo</b></i></p>
+      <div class="emoji">💫</div>
+    </div>
+  </div>
+
+  <!-- Modal 4 -->
+  <div id="modalMensagem4" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="fecharModal4()">&times;</span>
+      <div id="mensagemTexto4"><h1><b> 100 Motivos para te amar</b></h1>
+
+  <div class="motivo">1. Eu amo o seu sorriso</div>
+  <div class="motivo">2. Eu amo os seus olhos</div>
+  <div class="motivo">3. Eu amo como você me entende</div>
+  <div class="motivo">4. Eu amo seus carinhos</div>
+  <div class="motivo">5. Eu amo sua sinceridade</div>
+  <div class="motivo">6. Eu amo as suas piadas sem graça</div>
+  <div class="motivo">7. Eu amo as suas brincadeiras</div>
+  <div class="motivo">8. Eu amo o jeito que você fala comigo</div>
+  <div class="motivo">9. Eu amo a sua voz</div>
+  <div class="motivo">10. Eu amo os seus dentes</div>
+  <div class="motivo">11. Eu amo como você planeja o nosso futuro</div>
+  <div class="motivo">12. Eu amo como você está em todos os meus planos</div>
+  <div class="motivo">13. Eu amo confiar em você</div>
+  <div class="motivo">14. Eu amo como você confia em mim</div>
+  <div class="motivo">15. Eu amo passar cada segundo do meu dia pensando em você</div>
+  <div class="motivo">16. Eu amo estar com saudade segundos depois de me despedir de você</div>
+  <div class="motivo">17. Eu amo o seu cheiro</div>
+  <div class="motivo">18. Eu amo o seu estilo</div>
+  <div class="motivo">19. Eu amo como você segura minha cintura</div>
+  <div class="motivo">20. Eu amo o seu abraço</div>
+  <div class="motivo">21. Eu amo o seu beijo demorado</div>
+  <div class="motivo">22. Eu amo quando você tenta me irritar</div>
+  <div class="motivo">23. Eu amo a sua criatividade</div>
+  <div class="motivo">24. Eu amo a sua inteligência</div>
+  <div class="motivo">25. Eu amo o seu jeito bobo</div>
+  <div class="motivo">26. Eu amo nossas brincadeiras</div>
+  <div class="motivo">27. Eu amo quando você tem essas ideias doidas e divertidas</div>
+  <div class="motivo">28. Eu amo como você me conforta</div>
+  <div class="motivo">29. Eu amo como você sempre me ajuda</div>
+  <div class="motivo">30. Eu amo a sua sobrancelha</div>
+  <div class="motivo">31. Eu amo quando você me provoca</div>
+  <div class="motivo">32. Eu amo a sua língua</div>
+  <div class="motivo">33. Eu amo ter você</div>
+  <div class="motivo">34. Eu amo ser sua</div>
+  <div class="motivo">35. Eu amo quando você me abraça forte</div>
+  <div class="motivo">36. Eu amo a sua beleza</div>
+  <div class="motivo">37. Eu amo te fazer rir</div>
+  <div class="motivo">38. Eu amo como você nunca me deixa triste</div>
+  <div class="motivo">39. Eu amo como sempre abro um sorriso quando te vejo</div>
+  <div class="motivo">40. Eu amo ter conhecido você</div>
+  <div class="motivo">41. Eu amo ficar boba com você</div>
+  <div class="motivo">42. Eu amo como você segura minha mão</div>
+  <div class="motivo">43. Eu amo como você arruma o cabelo</div>
+  <div class="motivo">44. Eu amo como você olha pra mim</div>
+  <div class="motivo">45. Eu amo cada segundo que eu passo contigo</div>
+  <div class="motivo">46. Eu amo falar as coisas que amo em você</div>
+  <div class="motivo">47. Eu amo a sua capacidade de me fazer rir em qualquer situação</div>
+  <div class="motivo">48. Eu amo quando você me aperta</div>
+  <div class="motivo">49. Eu amo cheirar seu cabelinho</div>
+  <div class="motivo">50. Eu amo a sua ironia</div>
+  <div class="motivo">51. Eu amo a sua gargalhada</div>
+  <div class="motivo">52. Eu amo como você me respeita</div>
+  <div class="motivo">53. Eu amo quando você fala que tá com saudade</div>
+  <div class="motivo">54. Eu amo quando você se despede com carinho</div>
+  <div class="motivo">55. Eu amo como você sempre me espera com paciência</div>
+  <div class="motivo">56. Eu amo como você é paciente comigo</div>
+  <div class="motivo">57. Eu amo sair com você</div>
+  <div class="motivo">58. Eu amo o seu romantismo</div>
+  <div class="motivo">59. Eu amo como você me tornou romântica</div>
+  <div class="motivo">60. Eu amo implicar com as suas paixões</div>
+  <div class="motivo">61. Eu amo quando você implica com as minhas</div>
+  <div class="motivo">62. Eu amo compartilhar assuntos que você gosta</div>
+  <div class="motivo">63. Eu amo como te faço ficar sem argumentos</div>
+  <div class="motivo">64. Eu amo quandp você é safado</div>
+  <div class="motivo">65. Eu amo sua cara de ciúmes</div>
+  <div class="motivo">66. Eu amo dormir nos teus braços</div>
+  <div class="motivo">67. Eu amo a segurança que você me transmite</div>
+  <div class="motivo">68. Eu amo deitar no teu colo</div>
+  <div class="motivo">69. Eu amo encostar no teu peito</div>
+  <div class="motivo">70. Eu amo mexer no seu cabelo</div>
+  <div class="motivo">71. Eu amo bagunçar o seu cabelo</div>
+  <div class="motivo">72. Eu amo como você se preocupa comigo</div>
+  <div class="motivo">73. Eu amo quando você espera eu me arrumar</div>
+  <div class="motivo">74. Eu amo a sua vaidade</div>
+  <div class="motivo">75. Eu amo a sua preocupação em estar bem pra mim</div>
+  <div class="motivo">76. Eu amo como você me ama mesmo nos meus piores dias</div>
+  <div class="motivo">77. Eu amo como você tenta me entender</div>
+  <div class="motivo">78. Eu amo o seu jeito tímido</div>
+  <div class="motivo">79. Eu amo conhecer cada detalhe seu</div>
+  <div class="motivo">80. Eu amo quando você faz exatamente aquilo que me faz sorrir</div>
+  <div class="motivo">81. Eu amo como você me entende antes mesmo de eu terminar de falar</div>
+  <div class="motivo">82. Eu amo como você pede minha opinião pra tudo</div>
+  <div class="motivo">83. Eu amo quando pergunta se pode sair</div>
+  <div class="motivo">84. Eu amo quando você me liga </div>
+  <div class="motivo">85. Eu amo pensar no nosso futuro</div>
+  <div class="motivo">86. Eu amo imaginar a nossa família juntos</div>
+  <div class="motivo">87. Eu amo nossos momentos doces</div>
+  <div class="motivo">88. Eu amo como você me acha bonita mesmo desarrumada</div>
+  <div class="motivo">89. Eu amo o seu corpo, cada detalhe</div>
+  <div class="motivo">90. Eu amo as suas mãos</div>
+  <div class="motivo">91. Eu amo quando você me manda reels</div>
+  <div class="motivo">92. Eu amo quando você se finge de sonso</div>
+  <div class="motivo">93. Eu amo como você admite seus erros</div>
+  <div class="motivo">94. Eu amo como você pede desculpa quando está errado</div>
+  <div class="motivo">95. Eu amo como você às vezes fala coisas engraçadas sem sentido</div>
+  <div class="motivo">96. Eu amo como nunca quero te deixar</div>
+  <div class="motivo">97. Eu amo como odeio ficar longe de você</div>
+  <div class="motivo">98. Eu amo quando vem me visitar</div>
+  <div class="motivo">99. Eu amo quando você exibe seus braços fortes </div>
+  <div class="motivo">100. Eu amo como você me cuida</div>
+  <p><i><b>100 motivos ainda é pouco para dizer todos os motivos que me faz amar você 💕</b></i></p>
+      <div class="emoji">🌟</div>
+    </div>
+  </div>
+  </div>
+  <!-- Som de digitação -->
+  <audio id="somDigitacao" src="" preload="auto"></audio>
+  <script>
+    const textoMensagem = "Cortez, não sou boa com textos mas vamos lá, conhecer você foi uma das melhores coisas que aconteceu comigo. Você se tornou uma parte importante da minha vida e eu não sei como te agradecer. ter você ao meu lado é o que mais me faz feliz. Você é a pessoa que alegra meu dia apenas com um bodia, vc não tem ideia de como tem me feito bem, por que você me completa, trás cor para os meus dias cinzentos e me faz feliz. Eu te amo, e te amo por inteiro, cada cantinho seu ou traço da sua personalidade me encantam. Eu amo seu sorriso, ele muda e ilumina meu dia por completo! Eu amo seus olhos, eles possuem uma cor indescritível de tão bonita, posso me perder dentro deles ah se eu me perdesse, nunca mais ia querer voltar, se eu pudesse passaria todos os segundos da minha vida apenas olhando pra eles, seus olhos me encantam... Eu amo o som da sua voz, é como uma música, a mais bonita que poderia ouvir em minha vida toda, (mesmo que eu fique zoando que ela parece de viadinho), eu amo seus abraços, beijinhos, nossos momentos e tudo que envolve vc e eu juntos. Só de deitar toda noite e lembrar que vc está comigo a todo tempo, seja ele um tempo bom ou ruim, já é um motivo extremamente grande para agradecer muito a Deus por ter vc ao meu lado, por ter me enviado vc como anjo da Guarda, por ser vc, apenas vc. Me sinto lisonjeada por ser sua companheira, sinto muito por não ser perfeita e me perdoa se eu te magoei alguma vez, não foi minha intenção. por que vc é o melhor companheiro, namorado e melhor amigo que alguém poderia ter, eu te amo mais que todos os milhões existentes e não existentes no planeta terra! Saiba que apesar de todos os estresses que já tivemos, eu nunca vou deixar de te amar, pois meu amor por vc é puro, sincero e verdadeiro. Obrigada por sempre estar me ajudando a ser uma pessoa melhor, obrigada por cada momento juntos, cada risada, drama, crises, jogos, filmes, abraços, conselhos, desentendimentos e tudo mais, isso tornou nosso amor mais forte... Meu coração é todo seu, não sou nem de longe uma daquelas mulheres duronas, mas sempre fui um pouco difícil e vc me conquistou. Ganhou meu coração.. E hj me derreto toda apenas com um sorriso, isso é ser boba? é ser clichê? pq se for, quero ser a pessoa mais clichê do mundo só pra ter esse sorriso pra mim pro resto da vida. Você é o garoto mais incrível que conheci. você me faz querer continuar todos os dias e não desistir nunca, posso dizer que você é minha maior inspiração, quando vc chegou na minha vida eu estava machucada em relação ao amor, mas me apaixonei por vc mesmo com medo de passar por tudo de novo, pois meu amor por vc começou a ser intenso, e resolvi te escolher para ser feliz ao meu lado e te fazer feliz, você é e sempre será sem dúvida o amor da minha vida, só você comigo é a melhor coisa do mundo, para muitos deve ser bobeira, mas para mim cada momento que passamos juntos é incrível, você é aquela pessoa que eu acordo e durmo pensando. E todos que passaram na minha vida, pode ter certeza que você é o único a ser o meu verdadeiro amor, consegui me apaixonar por você em menos de um mês, sei que já nós conheciamos a um tempo mas não eramos proximo, e no final você conseguiu se aproximar e ganhar um lugar especial no meu coração. Por você eu sinto coisas que nunca senti por ninguém, eu te amo tanto que eu quero ser para você o que nunca foram para mim e quero que você se sinta o homem mais feliz do mundo ao meu lado, você chegou na minha vida e tudo mudou. Obrigado por aparecer na minha vida no momento em que eu mais precisava, me fez sentir algo que ninguém mais vai conseguir fazer, e se der errado com você eu não saberei o que fazer, eu te amo, e te quero para sempre, você é muito importante para mim e estou muito grata por isso tudo, quem imaginaria que uma pessoa em tão pouco tempo se tornaria tão importante na minha vida. Eu quero ser a primeira pessoa que vc vai procurar quando não estiver se sentindo bem ou quando precisar de algo, quero ser a pessoa que você vai dividir as dores e contar os segredos mais obscuros que existem, mas isso é o de menos, o que mais importa é estar ao seu lado, você não sabe o quanto eu sou sortuda por ter você em minha vida, desde o momento em que nós conhecemos não imaginaria que a gente iria se dar tão bem. te amar é sem dúvida o que eu faço de melhor, você comigo é um sonho que eu tava esperando tanto, o seu amor me salvou de tantas coisas que você nem imagina, você curou feridas que nem foi vc que causou elas, ter você do meu lado é a melhor coisa que já me aconteceu, e eu não tenho palavras pra descrever meu amor por vc, eu tenho tanta sorte em ter vc, e tenho mais sorte ainda em você ser MEU!!. Você me transmite uma paz q nem eu mesma sei explicar, você pode não perceber mas você ta me ajudando todos os dias apenas por ser vc, com esse seu jeitinho único. Obrigada por me transformar e por me completar tanto, todas as coisas que você faz me fazem lembrar do pq eu ser completamente apaixonada por vc, eu me apaixonei por vc ser único, EU TE LOBO obrigada por tudo, eu te amoo com toda minha alma, com todas a minhas forças, eu te amo a cada fase da lua...Eu te amo com minha alma porque ela nunca morre e eu sei q nosso amor tbm não vai, nosso amor não vai ser algo passageiro, ele irá durar pra sempre. Eu te amo com todas minhas forças pq se depender de mim, eu sei que elas nunca vão acabar. Eu te amo como cada fase da lua pq cada fase q já passamos, cada obstáculos, só mostra q nosso amor é real. Eu sou completamente apaixonada por vc, cada detalhe q vc possui, até suas imperfeições que para mim soa mais do q perfeitas, eu sou apaixonada. eu me apaixonei pelo seu jeito de ser vc. Eu me apaixonei por vc e sem dúvidas daqui 20 anos eu vou continuar te amando e sendo apaixonada em vc kkkkkk eu não me vejo mais sem vc, talvez eu esteja sendo muito adiantada mas foda-se eu só quero fazer você feliz. Sabe, desde o momento em q vc entrou na minha vida eu sabia q vc se tornaria a pessoa mais importante para mim e eu não estava errada em pensar isso. Eu te amo de um jeito totalmente inexplicável e maravilhoso. Eu te amo porque meu coração chega a errar as batidas quando pretende te abraçar. Eu te amo porque você virou meu lar, a minha morada, e faz parte da minha vida. Eu te amo, porque não quero mais ninguém, além de você. Eu te amo porque sempre estamos juntos, e quando não estamos, damos um jeito para ficar. Eu te amo porque eu te amo e o que sinto eu não consigo explicar. Eu te amo sem explicações, sem perguntas. Eu te amo tanto que a única coisa que eu quero agora, é você, pra eu poder sentir o meu peito no seu e dizer finalmente, esse é o meu lar. Sabe eu orei muito para que Deus colocasse na minha vida um homem que fizesse tudo por mim. Alguém que estivesse comigo em todos os momentos, me entendesse, e me fizesse sorrir pelos motivos mais bobos, me respeitasse, fizesse questão de mostrar para todos que é completamente apaixonado por mim, e acima de tudo, me amasse do jeitinho que eu sou, da cabeça aos pés, independente de qualquer “defeito”. E ele me mandou você, como a resposta mais linda de TODAS as minhas orações!. Meu princeso, nunca passou pela minha cabeça que estaríamos juntos algum dia… e agora, eu não consigo mais imaginar a minha vida sem você! Desde que você chegou de mansinho, com seu jeitinho fofo e bobo, eu senti que algo que faltava em mim foi preenchido. Que estranho, né? Parece que o destino tava só esperando a gente se encontrar pra nos unir. Nunca achei que sentiria tanto amor por alguém quanto eu sinto por você, querido. Você é incrível! É como se fosse uma porção mágica que me anima só de ouvir sua voz. Só de estar com você, eu me sinto bem. Você me faz esquecer de tudo ao meu redor — dos meus problemas, das minhas dores. Só de ouvir falar no seu nome, um sorriso gigante aparece no meu rosto. Você me faz bem! Jamais duvide do meu amor por você, tá bom? Nunca duvide de você mesmo. Não guarde as coisas pra si sozinho, porque eu sempre estarei ao seu lado pra te ouvir. Você é uma pessoa muito boa, e eu sempre soube disso."
+    let index = 0;
+    let intervalo;
+
+    function abrirModal() {
+      document.getElementById("modalMensagem").style.display = "block";
+      const msg = document.getElementById("mensagemTexto");
+      msg.textContent = "";
+      index = 0;
+
+      const audio = document.getElementById("somDigitacao");
+      clearInterval(intervalo);
+
+      intervalo = setInterval(() => {
+        if (index < textoMensagem.length) {
+          msg.textContent += textoMensagem.charAt(index);
+          if (textoMensagem.charAt(index) !== ' ') {
+            audio.currentTime = 0;
+            audio.play();
+          }
+          index++;
+        } else {
+          clearInterval(intervalo);
+        }
+      }, 60);
+    }
+
+    function fecharModal() {
+      document.getElementById("modalMensagem").style.display = "none";
+      clearInterval(intervalo);
+    }
+
+    function abrirModal2() {
+      document.getElementById("modalMensagem2").style.display = "block";
+    }
+
+    function fecharModal2() {
+      document.getElementById("modalMensagem2").style.display = "none";
+    }
+
+    function abrirModal3() {
+      document.getElementById("modalMensagem3").style.display = "block";
+    }
+
+    function fecharModal3() {
+      document.getElementById("modalMensagem3").style.display = "none";
+    }
+
+    function abrirModal4() {
+      document.getElementById("modalMensagem4").style.display = "block";
+    }
+
+    function fecharModal4() {
+      document.getElementById("modalMensagem4").style.display = "none";
+      
+    }
+    
+  let videoVisivel = false;
+  let musicaTocando = false;
+  let audio = new Audio("Levocomigo.mp3");
+
+  function alternarVideo() {
+    const videoDiv = document.getElementById("meuVideo");
+    const botaoVideo = document.getElementById("botaoVideo");
+
+    if (videoVisivel) {
+      videoDiv.style.display = "none";
+      botaoVideo.innerHTML = "<i><b>ASSISTIR VÍDEO</b></i>";
+    } else {
+      videoDiv.style.display = "block";
+      botaoVideo.innerHTML = "<i><b>PAUSAR VÍDEO</b></i>";
+    }
+
+    videoVisivel = !videoVisivel;
+  }
+
+  function alternarMusica() {
+    const botaoMusica = document.getElementById("botaoMusica");
+
+    if (musicaTocando) {
+      audio.pause();
+      botaoMusica.innerHTML = "<i><b>OUVIR MÚSICA</b></i>";
+    } else {
+      audio.play();
+      botaoMusica.innerHTML = "<i><b>PAUSAR MÚSICA</b></i>";
+    }
+
+    musicaTocando = !musicaTocando;
+  }
+
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+          clearInterval(intervalo);
+        }
+      });
+    }
+  // Função para mostrar ou esconder o container do quiz
+  function alternarQuiz() {
+    const quizContainer = document.getElementById('quizContainer');
+    if (quizContainer.style.display === 'none' || quizContainer.style.display === '') {
+      quizContainer.style.display = 'block';
+    } else {
+      quizContainer.style.display = 'none';
+    }
+  }
+
+  // Função para verificar as respostas do quiz e mostrar o resultado
+  function verificarRespostas() {
+    const respostasCorretas = {
+      q1: 'b',
+      q2: 'a',
+      q3: 'b',
+      q4: 'c',
+      q5: 'c'
+    };
+
+    let pontuacao = 0;
+    const totalQuestoes = Object.keys(respostasCorretas).length;
+
+    for (let i = 1; i <= totalQuestoes; i++) {
+      const questao = 'q' + i;
+      const respostaSelecionada = document.querySelector(`input[name="${questao}"]:checked`);
+      if (respostaSelecionada && respostaSelecionada.value === respostasCorretas[questao]) {
+        pontuacao++;
+      }
+    }
+
+    const resultado = document.getElementById('quizResultado');
+    resultado.textContent = `Você acertou ${pontuacao} de ${totalQuestoes} perguntas!`;
+
+    if (pontuacao === totalQuestoes) {
+      resultado.textContent += ' Parabéns, você é um excelente namorado para a Damares!';
+      resultado.style.color = '#d63384';
+    } else if (pontuacao >= totalQuestoes / 2) {
+      resultado.textContent += ' Muito bom! Você conhece bem a Damares.';
+      resultado.style.color = '#fd7e14';
+    } else {
+      resultado.textContent += ' Você é um péssimo namorado para a Damares!';
+      resultado.style.color = '#6c757d';
+    }
+  }
+  function calcularDiasDesde(dataInicial) {
+    const hoje = new Date();
+    const inicio = new Date(dataInicial);
+    const diferencaTempo = hoje - inicio;
+    const dias = Math.floor(diferencaTempo / (1000 * 60 * 60 * 24));
+    return dias;
+  }
+
+  const dias = calcularDiasDesde("2025-03-20"); // Altere a data aqui
+  const mensagem = document.getElementById("mensagemDias");
+
+  if (dias < 30) {
+    mensagem.innerHTML = `Já se passaram <b>${dias}</b> dias… tudo ainda é um comecinho doce!`;
+  } else if (dias < 100) {
+    mensagem.innerHTML = `<b>${dias}</b> dias! O tempo tá voando e o sentimento só cresce!`;
+  } else if (dias < 365) {
+    mensagem.innerHTML = `Uau! <b>${dias}</b> dias juntinhos, como não se apaixonar?`;
+  } else {
+    mensagem.innerHTML = `Já são <b>${dias}</b> dias de história… isso é amor de verdade!`;
+  }
+  const frases = [
+  "Você tem um pedacinho do meu coração, sabia?",
+  "Cada dia contigo vale ouro.",
+  "Sorte a minha te ter por perto.",
+  "Você é poesia em forma de pessoa.",
+  "Às vezes eu só queria te dar um abraço eterno.",
+  "Tudo fica mais leve quando penso em você.",
+  "Tem gente que é abraço em forma de alma… tipo você!",
+  "Meu sorriso tem muito de você.",
+  "Você é meu cantinho de paz.",
+  "Nada no mundo brilha mais que teu olhar.",
+  "Estar ao seu lado é meu lugar favorito.",
+  "Você faz até os dias cinzas ficarem coloridos.",
+  "Meu coração sorri só de pensar em você.",
+  "Te encontrar foi meu acaso mais bonito.",
+  "Você é meu melhor pensamento.",
+  "A vida fica doce com você nela.",
+  "É lindo como você me faz sentir especial.",
+  "Meu mundo ficou mais bonito desde que você chegou.",
+  "Com você, tudo faz sentido.",
+  "Te ter por perto é meu maior presente.",
+  "Seu jeito ilumina meu dia.",
+  "É impossível não sorrir pensando em você.",
+  "O tempo voa quando estou contigo.",
+  "Você é meu porto seguro.",
+  "Teu cheiro ficou no meu coração.",
+  "Você faz tudo valer a pena.",
+  "Com você, até o silêncio é confortável.",
+  "Meu amor por você cresce todos os dias.",
+  "Você é a calmaria em meio ao caos.",
+  "Só de ouvir teu nome, meu coração dispara.",
+  "Você é minha parte favorita do dia.",
+  "Teu abraço é meu lar.",
+  "Seu sorriso é meu sol particular.",
+  "Amar você é fácil demais.",
+  "Você é a razão de muitos dos meus suspiros.",
+  "Contigo, tudo parece melhor.",
+  "Quero dividir meus planos, sonhos e domingos preguiçosos com você.",
+  "Você é meu melhor lugar no mundo.",
+  "Nunca pensei que fosse possível sentir tanto amor assim.",
+  "Se eu pudesse, te guardava num potinho só meu.",
+  "Seu olhar me desmonta por dentro.",
+  "Sou tão grata por ter você na minha vida.",
+  "Você me faz acreditar em dias melhores.",
+  "Quero escrever mil histórias ao seu lado.",
+  "Seu carinho é meu remédio favorito.",
+  "Você é detalhe e imensidão ao mesmo tempo.",
+  "Amor é teu nome no meu pensamento o dia inteiro.",
+  "Você é a música que toca no fundo do meu coração.",
+  "Meu dia começa e termina com você nos meus pensamentos.",
+  "Te amar é o meu melhor hobby.",
+  "Você me faz querer ser alguém melhor.",
+  "Nos teus olhos encontro meu universo.",
+  "Só você entende o idioma do meu coração.",
+  "Teu sorriso vale mais que qualquer diamante.",
+  "Você é meu segredo mais bonito.",
+  "Não existe rotina quando estou com você.",
+  "Você colore meus dias sem nem perceber.",
+  "Seu amor é meu refúgio favorito.",
+  "Queria poder congelar o tempo quando estou contigo.",
+  "Você me faz ver beleza em tudo.",
+  "Eu sorrio até com seus áudios bobos.",
+  "Te ter é ter o mundo inteiro.",
+  "Seu cheiro me deixa em paz.",
+  "Você é minha poesia preferida.",
+  "Teu abraço é meu carregador de energia.",
+  "Teus beijos têm gosto de lar.",
+  "A saudade de você é a parte mais difícil.",
+  "Contigo, tudo é festa.",
+  "Minha felicidade tem teu nome.",
+  "Você é como verão no inverno.",
+  "Teu amor me aquece por dentro.",
+  "Cada segundo ao teu lado vale uma eternidade.",
+  "Teu riso é melodia que embala meu dia.",
+  "Você é a estrela que faltava no meu céu.",
+  "É tão bom ter alguém como você na vida.",
+  "Só queria te dizer que você é tudo pra mim.",
+  "Você é mais que especial, é único.",
+  "Sou feliz só porque você existe.",
+  "Você faz a vida ter cor, sabor e sentido.",
+  "Teu olhar me faz flutuar.",
+  "Nada é tão bonito quanto ouvir teu “eu te amo”."
+];
+
+  function mostrarFrase() {
+    const aleatoria = frases[Math.floor(Math.random() * frases.length)];
+    document.getElementById("fraseDoCoracao").textContent = aleatoria;
+  }
+let contador = 2;
+
+function mostrarMemoria(n) {
+  const texto = document.getElementById('memoria' + n);
+  if (texto) {
+    texto.style.display = texto.style.display === 'none' ? 'block' : 'none';
+  }
+}
+
+// NOVO: abrir/fechar o modal
+function abrirModalMemoria() {
+  document.getElementById('modalMemoria').style.display = 'flex';
+}
+
+function fecharModalMemoria() {
+  document.getElementById('modalMemoria').style.display = 'none';
+  document.getElementById('inputMemoria').value = "";
+}
+
+// NOVO: confirmar a memória escrita
+function confirmarMemoria() {
+  const texto = document.getElementById('inputMemoria').value.trim();
+  if (texto === "") return;
+
+  salvarMemoriaNoLocalStorage(texto);
+  criarBlocoMemoria(texto, contador);
+  contador++;
+
+  fecharModalMemoria();
+  document.getElementById('somMemoria').play();
+}
+
+// Bloco de memória
+function criarBlocoMemoria(conteudo, id) {
+  const novaMemoria = document.createElement('div');
+  novaMemoria.className = 'memoria';
+  novaMemoria.setAttribute('onclick', `mostrarMemoria(${id})`);
+  novaMemoria.innerHTML = `
+    <b>Memória ${id + 1}:</b>
+    <p id="memoria${id}" class="texto-memoria">${conteudo}</p>
+  `;
+  document.getElementById("memoriasContainer").appendChild(novaMemoria);
+}
+
+// Armazenamento
+function salvarMemoriaNoLocalStorage(texto) {
+  let memos = JSON.parse(localStorage.getItem('memoriasExtras')) || [];
+  memos.push(texto);
+  localStorage.setItem('memoriasExtras', JSON.stringify(memos));
+}
+
+function carregarMemoriasSalvas() {
+  const memos = JSON.parse(localStorage.getItem('memoriasExtras')) || [];
+  memos.forEach((texto) => {
+    criarBlocoMemoria(texto, contador);
+    contador++;
+  });
+}
+
+window.onload = carregarMemoriasSalvas;
+ let memoriaEditando = null;
+  let memoriaEditandoTitulo = null;
+  let memorias = [];
+
+  window.onload = () => {
+    carregarMemorias();
+  };
+
+  function carregarMemorias() {
+    const salvas = localStorage.getItem('memorias');
+    if (salvas) {
+      memorias = JSON.parse(salvas);
+      renderizarMemorias();
+    }
+  }
+
+  function salvarMemorias() {
+    localStorage.setItem('memorias', JSON.stringify(memorias));
+  }
+
+  function renderizarMemorias() {
+    const container = document.getElementById('memoriasContainer');
+    container.innerHTML = '<h2 style="color: #c2185b;">Nossas Memórias</h2>';
+
+    memorias.forEach((memoria, index) => {
+      const div = document.createElement('div');
+      div.className = 'memoria';
+      div.setAttribute('onclick', `mostrarMemoria(${index})`);
+      div.style.border = '1px solid #f8bbd0';
+      div.style.borderRadius = '10px';
+      div.style.padding = '10px';
+      div.style.marginBottom = '10px';
+
+      div.innerHTML = `
+        <b id="titulo${index}">${memoria.titulo}:</b>
+        <p id="memoria${index}" class="texto-memoria">${memoria.texto}</p>
+        <div class="botoes-memoria">
+          <button onclick="editarTitulo(event, ${index})">Editar Título</button>
+          <button onclick="excluirMemoria(event, ${index})">Excluir</button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function abrirModalMemoria() {
+    document.getElementById('modalMemoria').style.display = 'flex';
+  }
+
+  function fecharModalMemoria() {
+    document.getElementById('modalMemoria').style.display = 'none';
+  }
+
+  function confirmarMemoria() {
+    const texto = document.getElementById('inputMemoria').value.trim();
+    if (texto === '') return alert('Digite algo!');
+
+    const novoTitulo = `Memória ${memorias.length + 1}`;
+    memorias.push({ titulo: novoTitulo, texto });
+    salvarMemorias();
+    renderizarMemorias();
+
+    document.getElementById('inputMemoria').value = '';
+    fecharModalMemoria();
+
+    const som = document.getElementById('somMemoria');
+    som.play();
+  }
+function mostrarMemoria(index) {
+  const titulo = memorias[index].titulo;
+  const texto = memorias[index].texto;
+
+  document.getElementById('tituloVerMemoria').textContent = titulo;
+  document.getElementById('textoVerMemoria').textContent = texto;
+  document.getElementById('modalVerMemoria').style.display = 'flex';
+}
+function fecharModalVerMemoria() {
+  document.getElementById('modalVerMemoria').style.display = 'none';
+}
+
+
+  function editarTitulo(event, index) {
+    event.stopPropagation();
+    memoriaEditandoTitulo = index;
+    document.getElementById('inputNovoTitulo').value = memorias[index].titulo;
+    document.getElementById('modalEditarTitulo').style.display = 'flex';
+  }
+
+  function fecharModalEditarTitulo() {
+    document.getElementById('modalEditarTitulo').style.display = 'none';
+  }
+
+  function salvarNovoTitulo() {
+    const novoTitulo = document.getElementById('inputNovoTitulo').value.trim();
+    if (novoTitulo === '') return alert('Digite um título!');
+    memorias[memoriaEditandoTitulo].titulo = novoTitulo;
+    salvarMemorias();
+    renderizarMemorias();
+    fecharModalEditarTitulo();
+  }
+
+  let memoriaParaExcluir = null;
+
+function excluirMemoria(event, index) {
+  event.stopPropagation();
+  memoriaParaExcluir = index;
+  document.getElementById('modalConfirmarExclusao').style.display = 'flex';
+}
+
+function fecharModalConfirmarExclusao() {
+  document.getElementById('modalConfirmarExclusao').style.display = 'none';
+}
+
+function confirmarExclusao() {
+  if (memoriaParaExcluir !== null) {
+    memorias.splice(memoriaParaExcluir, 1);
+    salvarMemorias();
+    renderizarMemorias();
+    memoriaParaExcluir = null;
+  }
+  fecharModalConfirmarExclusao();
+}
+  </script>
+  <div style="text-align: center; margin-top: 30px;">
+  <a href="https://aizy01.github.io/I-LOVE-YOU/" style="color: #ff69b4; font-size: 16px; text-decoration: none;">
+    Visite meu outro site!
+  </a>
+</div>
+<footer style="text-align: center; padding: 20px; color: #ff69b4; font-size: 14px;"><b>
+  © 2025 — Criado com carinho por @aizyxz
+  </b></footer>
+</body>
+</html>
